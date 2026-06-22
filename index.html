@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pineapplezero - 创意开发者 & 内容创作者 / Creative Developer & Content Creator" />
+  <meta name="theme-color" content="#e8914a" />
+  <title>Pineapplezero</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ========== Reset & Base ========== */
+    *,
+    *::before,
+    *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf7f2;
+      --surface: #ffffff;
+      --text-primary: #2c2420;
+      --text-secondary: #8a7b72;
+      --text-muted: #b5a8a0;
+      --accent: #e8914a;
+      --accent-dark: #c97a3a;
+      --accent-glow: rgba(232, 145, 74, 0.15);
+      --accent-light: #fef3e8;
+      --border: #e8ddd2;
+      --border-light: #f0e9e0;
+      --shadow-sm: 0 1px 3px rgba(44, 36, 32, 0.06);
+      --shadow-md: 0 4px 20px rgba(44, 36, 32, 0.08);
+      --shadow-lg: 0 8px 40px rgba(44, 36, 32, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-width: 1200px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ========== Scroll Animations ========== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Stagger delays */
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+
+    /* ========== Language Toggle ========== */
+    .lang-toggle {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px;
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .lang-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      background: transparent;
+      color: var(--text-muted);
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: var(--text-primary);
+      background: var(--border-light);
+    }
+
+    /* ========== Decorative Background ========== */
+    .bg-decor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    .bg-circle-1 {
+      width: 600px;
+      height: 600px;
+      top: -200px;
+      right: -150px;
+      background: radial-gradient(circle, rgba(232, 145, 74, 0.12), transparent 70%);
+      animation: float-slow 20s ease-in-out infinite;
+    }
+
+    .bg-circle-2 {
+      width: 400px;
+      height: 400px;
+      bottom: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(232, 145, 74, 0.08), transparent 70%);
+      animation: float-slow 25s ease-in-out infinite reverse;
+    }
+
+    .bg-circle-3 {
+      width: 200px;
+      height: 200px;
+      top: 50%;
+      left: 60%;
+      background: radial-gradient(circle, rgba(232, 145, 74, 0.06), transparent 70%);
+      animation: float-slow 18s ease-in-out infinite 5s;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(30px, -30px); }
+      66% { transform: translate(-20px, 20px); }
+    }
+
+    /* ========== Hero Section ========== */
+    .hero {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+      position: relative;
+    }
+
+    .hero-inner {
+      max-width: var(--max-width);
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-text {
+      position: relative;
+    }
+
+    .hero-greeting {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: var(--font-body);
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-name .accent-amp {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ========== Hero Visual ========== */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-logo {
+      width: 280px;
+      height: 280px;
+      position: relative;
+    }
+
+    .hero-logo-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .logo-ring {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      opacity: 0.2;
+    }
+
+    .logo-ring-2 {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      opacity: 0.1;
+    }
+
+    .logo-pineapple {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-zero {
+      fill: none;
+      stroke: var(--text-primary);
+      stroke-width: 2;
+    }
+
+    .logo-dot {
+      fill: var(--accent);
+    }
+
+    /* Glow behind logo */
+    .hero-glow {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 145, 74, 0.15), transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; }
+    }
+
+    /* ========== Section Base ========== */
+    section {
+      padding: 80px 24px;
+    }
+
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-family: var(--font-body);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ========== About Section ========== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .about-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.4s ease, transform 0.4s ease;
+    }
+
+    .about-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .about-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .about-card-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .about-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+
+    .about-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ========== Links Section ========== */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .link-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .link-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .link-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border);
+    }
+
+    .link-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      transition: transform 0.4s ease;
+    }
+
+    .link-card:hover .link-icon {
+      transform: scale(1.05);
+    }
+
+    .link-icon-bili {
+      background: linear-gradient(135deg, #fb7299, #f06a8a);
+      color: #fff;
+    }
+
+    .link-icon-github {
+      background: linear-gradient(135deg, #333, #24292e);
+      color: #fff;
+    }
+
+    .link-icon-email {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #fff;
+    }
+
+    .link-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+      stroke: none;
+    }
+
+    .link-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .link-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .link-arrow {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      transition: gap 0.3s ease;
+    }
+
+    .link-card:hover .link-arrow {
+      gap: 12px;
+    }
+
+    .link-arrow svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      transition: transform 0.3s ease;
+    }
+
+    .link-card:hover .link-arrow svg {
+      transform: translateX(4px);
+    }
+
+    /* ========== Footer ========== */
+    footer {
+      padding: 48px 24px 32px;
+      text-align: center;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .footer-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .footer-text {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+
+      .hero-text {
+        order: 2;
+      }
+
+      .hero-visual {
+        order: 1;
+      }
+
+      .hero-tagline {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .links-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+
+      .hero-logo {
+        width: 200px;
+        height: 200px;
+      }
+
+      .hero-glow {
+        width: 250px;
+        height: 250px;
+      }
+
+      .lang-toggle {
+        top: 16px;
+        right: 16px;
+      }
+
+      .lang-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      section {
+        padding: 60px 16px;
+      }
+
+      .hero {
+        padding: 100px 16px 60px;
+      }
+
+      .hero-logo {
+        width: 160px;
+        height: 160px;
+      }
+
+      .hero-glow {
+        width: 200px;
+        height: 200px;
+      }
+
+      .about-card {
+        padding: 28px;
+      }
+
+      .link-card {
+        padding: 24px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .reveal-left,
+      .reveal-right,
+      .reveal-scale {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .bg-circle,
+      .hero-glow,
+      .link-card,
+      .btn {
+        animation: none;
+        transition: none;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative Background -->
+  <div class="bg-decor">
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+    <div class="bg-circle bg-circle-3"></div>
+  </div>
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle" role="toolbar" aria-label="Language selector">
+    <button class="lang-btn active" data-lang="zh" aria-pressed="true">中文</button>
+    <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+
+  <!-- ========== Hero ========== -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-greeting reveal stagger-1" data-i18n="greeting">你好，我是</p>
+        <h1 class="hero-name reveal stagger-2">
+          <span class="accent-amp">Pineapple</span>zero
+        </h1>
+        <p class="hero-tagline reveal stagger-3" data-i18n="tagline">创意开发者 &amp; 内容创作者</p>
+        <div class="hero-actions reveal stagger-4">
+          <a href="#links" class="btn btn-primary" data-i18n="exploreBtn">探索我的世界</a>
+          <a href="mailto:2294734347@qq.com" class="btn btn-secondary" data-i18n="contactBtn">联系我</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-glow"></div>
+        <div class="hero-logo reveal-scale stagger-2">
+          <svg class="hero-logo-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer ring -->
+            <circle class="logo-ring" cx="140" cy="140" r="120" />
+            <circle class="logo-ring-2" cx="140" cy="140" r="105" />
+            
+            <!-- Pineapple shape (simplified) -->
+            <g class="logo-pineapple">
+              <!-- Pineapple body - hexagonal pattern -->
+              <path d="M140 60 L170 75 L170 105 L140 120 L110 105 L110 75 Z" />
+              <path d="M170 75 L195 90 L195 120 L170 105" />
+              <path d="M110 75 L85 90 L85 120 L110 105" />
+              <path d="M140 120 L170 135 L170 165 L140 180 L110 165 L110 135 Z" />
+              <path d="M170 135 L195 150 L195 180 L170 165" />
+              <path d="M110 135 L85 150 L85 180 L110 165" />
+              <path d="M140 180 L165 195 L165 210 L140 220 L115 210 L115 195 Z" />
+              <!-- Pineapple leaves -->
+              <path d="M140 60 Q140 35 145 20" stroke-width="2.5" />
+              <path d="M140 60 Q130 40 120 25" stroke-width="2" />
+              <path d="M140 60 Q150 40 160 25" stroke-width="2" />
+              <path d="M140 60 Q120 45 105 38" stroke-width="1.5" />
+              <path d="M140 60 Q160 45 175 38" stroke-width="1.5" />
+            </g>
+            
+            <!-- Zero symbol -->
+            <circle class="logo-zero" cx="140" cy="185" r="30" stroke-dasharray="4 4" />
+            
+            <!-- Decorative dots -->
+            <circle class="logo-dot" cx="140" cy="185" r="4" />
+            <circle class="logo-dot" cx="195" cy="90" r="3" opacity="0.5" />
+            <circle class="logo-dot" cx="85" cy="90" r="3" opacity="0.5" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== About ========== -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="reveal-left stagger-1">
+          <span class="section-label" data-i18n="aboutLabel">关于</span>
+          <h2 class="section-title" data-i18n="aboutTitle">用代码和创意<br />连接世界</h2>
+          <p class="section-desc" data-i18n="aboutDesc">
+            Pineapplezero 是一个热爱编程、设计和内容创作的开发者。在 B 站分享技术经验，
+            在 GitHub 开源项目，用 QQ 邮箱随时保持联系。
+            相信技术可以让世界变得更好。
+          </p>
+        </div>
+        <div class="reveal-right stagger-2">
+          <div class="about-card">
+            <div class="about-card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+            </div>
+            <h3 data-i18n="cardTitle">持续创造</h3>
+            <p data-i18n="cardDesc">
+              从代码到内容，每一行都用心打磨。Python、JavaScript、Go，
+              在不同技术栈间游走，享受解决问题的乐趣。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Links ========== -->
+  <section id="links">
+    <div class="section-inner">
+      <div class="reveal" style="margin-bottom: 48px;">
+        <span class="section-label" data-i18n="linksLabel">链接</span>
+        <h2 class="section-title" data-i18n="linksTitle">找到我</h2>
+        <p class="section-desc" data-i18n="linksDesc">
+          无论你喜欢看视频、读代码，还是想聊聊天，
+          这里都有我的踪迹。
+        </p>
+      </div>
+
+      <div class="links-grid">
+        <!-- Bilibili -->
+        <a href="https://space.bilibili.com/1823474972?spm_id_from=333.1007.0.0"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="link-card reveal-scale stagger-1">
+          <div class="link-icon link-icon-bili">
+            <svg viewBox="0 0 24 24">
+              <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.562 3.76v7.36c-.038 1.51-.558 2.765-1.562 3.768-1.004 1.002-2.263 1.522-3.773 1.56H5.333c-1.51-.038-2.769-.558-3.773-1.56C.556 20.113.036 18.858 0 17.348v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.263-1.52 3.773-1.575h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.346 0 .652.124.92.373L9.653 4.44c.071 0 .134.018.187.053.053.036.124.054.213.054h4.267c.09 0 .16-.018.213-.054a.315.315 0 0 1 .187-.053l2.986-2.854c.268-.249.574-.373.92-.373.347 0 .653.124.92.373l.027.027c.249.249.373.55.373.907 0 .338-.124.64-.373.906l-1.16 1.12zm-4.16 5.546v3.893c0 .24.084.444.253.613.17.17.375.254.614.254.238 0 .442-.085.612-.254.17-.17.255-.374.255-.613v-3.893c0-.239-.085-.443-.255-.613a.835.835 0 0 0-.612-.254c-.239 0-.443.085-.613.254a.835.835 0 0 0-.254.613zm-4.533 0v3.893c0 .24.084.444.253.613.17.17.375.254.613.254.239 0 .443-.085.613-.254.17-.17.255-.374.255-.613v-3.893c0-.239-.085-.443-.255-.613a.835.835 0 0 0-.613-.254c-.238 0-.442.085-.613.254a.835.835 0 0 0-.253.613z"/>
+            </svg>
+          </div>
+          <h3 data-i18n="biliTitle">Bilibili</h3>
+          <p data-i18n="biliDesc">B 站 UP 主，分享技术教程和项目实战视频</p>
+          <span class="link-arrow">
+            <span data-i18n="visitBtn">前往观看</span>
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com/PineappleZero/PineappleZero"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="link-card reveal-scale stagger-2">
+          <div class="link-icon link-icon-github">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </div>
+          <h3>GitHub</h3>
+          <p data-i18n="githubDesc">开源项目和代码仓库，一起贡献代码</p>
+          <span class="link-arrow">
+            <span data-i18n="visitBtn2">前往查看</span>
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+
+        <!-- Email -->
+        <a href="mailto:2294734347@qq.com"
+           class="link-card reveal-scale stagger-3">
+          <div class="link-icon link-icon-email">
+            <svg viewBox="0 0 24 24">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <path d="M22 6l-10 7L2 6"/>
+            </svg>
+          </div>
+          <h3 data-i18n="emailTitle">QQ 邮箱</h3>
+          <p data-i18n="emailDesc">2294734347@qq.com — 无论合作还是聊天，欢迎来信</p>
+          <span class="link-arrow">
+            <span data-i18n="emailBtn">发送邮件</span>
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Contact ========== -->
+  <section id="contact">
+    <div class="section-inner" style="text-align: center;">
+      <div class="reveal">
+        <span class="section-label" data-i18n="contactLabel">联系</span>
+        <h2 class="section-title" style="max-width: 600px; margin: 0 auto 16px;" data-i18n="contactTitle">
+          一起做点什么？
+        </h2>
+        <p class="section-desc" style="margin: 0 auto 36px;" data-i18n="contactDesc">
+          有项目合作想法，或者只是想打个招呼？欢迎发邮件给我。
+        </p>
+        <a href="mailto:2294734347@qq.com" class="btn btn-primary" data-i18n="contactBtn2">
+          发送邮件 →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-name">Pineapplezero</p>
+      <p class="footer-text" data-i18n="footer">© 2026 Pineapplezero. 用 ❤ 和代码创造。</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ===================================================
+       i18n — 中英文语言切换
+       =================================================== */
+    const i18n = {
+      zh: {
+        greeting: '你好，我是',
+        tagline: '创意开发者 &amp; 内容创作者',
+        exploreBtn: '探索我的世界',
+        contactBtn: '联系我',
+        aboutLabel: '关于',
+        aboutTitle: '用代码和创意<br />连接世界',
+        aboutDesc: 'Pineapplezero 是一个热爱编程、设计和内容创作的开发者。在 B 站分享技术经验，在 GitHub 开源项目，用 QQ 邮箱随时保持联系。相信技术可以让世界变得更好。',
+        cardTitle: '持续创造',
+        cardDesc: '从代码到内容，每一行都用心打磨。Python、JavaScript、Go，在不同技术栈间游走，享受解决问题的乐趣。',
+        linksLabel: '链接',
+        linksTitle: '找到我',
+        linksDesc: '无论你喜欢看视频、读代码，还是想聊聊天，这里都有我的踪迹。',
+        biliTitle: 'Bilibili',
+        biliDesc: 'B 站 UP 主，分享技术教程和项目实战视频',
+        githubDesc: '开源项目和代码仓库，一起贡献代码',
+        visitBtn: '前往观看',
+        visitBtn2: '前往查看',
+        emailTitle: 'QQ 邮箱',
+        emailDesc: '2294734347@qq.com — 无论合作还是聊天，欢迎来信',
+        emailBtn: '发送邮件',
+        contactLabel: '联系',
+        contactTitle: '一起做点什么？',
+        contactDesc: '有项目合作想法，或者只是想打个招呼？欢迎发邮件给我。',
+        contactBtn2: '发送邮件 →',
+        footer: '&copy; 2026 Pineapplezero. 用 ❤ 和代码创造。'
+      },
+      en: {
+        greeting: "Hi, I'm",
+        tagline: 'Creative Developer &amp; Content Creator',
+        exploreBtn: 'Explore My World',
+        contactBtn: 'Get in Touch',
+        aboutLabel: 'About',
+        aboutTitle: 'Connecting the World<br />Through Code &amp; Creativity',
+        aboutDesc: 'Pineapplezero is a developer passionate about programming, design, and content creation. Sharing tech tutorials on Bilibili, open-source projects on GitHub, and always available via QQ email. Believing technology can make the world a better place.',
+        cardTitle: 'Always Creating',
+        cardDesc: 'From code to content, every line is carefully crafted. Python, JavaScript, Go — exploring different tech stacks and enjoying the joy of problem-solving.',
+        linksLabel: 'Links',
+        linksTitle: 'Find Me',
+        linksDesc: 'Whether you enjoy watching videos, reading code, or just having a chat, you can find me here.',
+        biliTitle: 'Bilibili',
+        biliDesc: 'Content creator on Bilibili, sharing tech tutorials and project walkthroughs',
+        githubDesc: 'Open source projects and code repos — let\'s contribute together',
+        visitBtn: 'Watch Now',
+        visitBtn2: 'View Profile',
+        emailTitle: 'QQ Email',
+        emailDesc: '2294734347@qq.com — Drop me a line for collaboration or just to say hi',
+        emailBtn: 'Send Email',
+        contactLabel: 'Contact',
+        contactTitle: 'Want to Build Something Together?',
+        contactDesc: 'Got a project in mind or just want to say hello? Feel free to reach out!',
+        contactBtn2: 'Send an Email →',
+        footer: '&copy; 2026 Pineapplezero. Built with ❤ and code.'
+      }
+    };
+
+    /* ===================================================
+       Init current language
+       =================================================== */
+    let currentLang = localStorage.getItem('pineapplezero-lang') || 'zh';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.setAttribute('data-lang', lang);
+      localStorage.setItem('pineapplezero-lang', lang);
+
+      // Update all i18n elements
+      const strings = i18n[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (strings[key] !== undefined) {
+          el.innerHTML = strings[key];
+        }
+      });
+
+      // Update toggle buttons
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        const isActive = btn.getAttribute('data-lang') === lang;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+      });
+    }
+
+    // Language toggle event listeners
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        if (lang !== currentLang) {
+          setLanguage(lang);
+        }
+      });
+    });
+
+    /* ===================================================
+       Scroll Reveal (Intersection Observer)
+       =================================================== */
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -60px 0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Unobserve after it's revealed for performance
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all reveal elements
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+      .forEach(el => observer.observe(el));
+
+    /* ===================================================
+       Initialize
+       =================================================== */
+    // Trigger initial language set
+    setLanguage(currentLang);
+  </script>
+</body>
+</html>

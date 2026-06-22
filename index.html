@@ -197,17 +197,12 @@
       white-space: nowrap;
     }
     .hero-visual:hover .hero-easter-egg-hint { opacity: 1; }
-    .hero-logo { width: 280px; height: 280px; position: relative; transition: transform 0.3s ease; }
+    .hero-logo { width: 280px; height: 280px; position: relative; transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; }
     .hero-visual:hover .hero-logo { transform: scale(1.05); }
     .hero-visual { overflow: visible; }
 
-    /* ========== First Version Logo ========== */
-    .hero-logo-svg { width: 100%; height: 100%; overflow: visible; }
-    .logo-ring { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0.2; }
-    .logo-ring-2 { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.1; }
-    .logo-pineapple { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-    .logo-zero { fill: none; stroke: var(--text-primary); stroke-width: 2; }
-    .logo-dot { fill: var(--accent); }
+    /* ========== Emoji Logo ========== */
+    .logo-emoji { font-size: 200px; line-height: 1; user-select: none; }
     .hero-glow {
       position: absolute; width: 350px; height: 350px; border-radius: 50%;
       background: radial-gradient(circle, rgba(232, 145, 74, 0.15), transparent 70%);
@@ -441,37 +436,7 @@
       <div class="hero-visual" id="heroVisual">
         <div class="hero-glow" id="heroGlow"></div>
         <div class="hero-logo reveal-scale stagger-2" id="heroLogo">
-          <svg class="hero-logo-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-            <!-- Outer ring -->
-            <circle class="logo-ring" cx="140" cy="140" r="120" />
-            <circle class="logo-ring-2" cx="140" cy="140" r="105" />
-            
-            <!-- Pineapple shape (simplified geometric) -->
-            <g class="logo-pineapple">
-              <path d="M140 60 L170 75 L170 105 L140 120 L110 105 L110 75 Z" />
-              <path d="M170 75 L195 90 L195 120 L170 105" />
-              <path d="M110 75 L85 90 L85 120 L110 105" />
-              <path d="M140 120 L170 135 L170 165 L140 180 L110 165 L110 135 Z" />
-              <path d="M170 135 L195 150 L195 180 L170 165" />
-              <path d="M110 135 L85 150 L85 180 L110 165" />
-              <path d="M140 180 L165 195 L165 210 L140 220 L115 210 L115 195 Z" />
-              <!-- Pineapple leaves -->
-              <path d="M140 60 Q140 35 145 20" stroke-width="2.5" />
-              <path d="M140 60 Q130 40 120 25" stroke-width="2" />
-              <path d="M140 60 Q150 40 160 25" stroke-width="2" />
-              <path d="M140 60 Q120 45 105 38" stroke-width="1.5" />
-              <path d="M140 60 Q160 45 175 38" stroke-width="1.5" />
-            </g>
-            
-            <!-- Zero symbol -->
-            <circle class="logo-zero" cx="140" cy="185" r="30" stroke-dasharray="4 4" />
-            
-            <!-- Decorative dots -->
-            <circle class="logo-dot" cx="140" cy="185" r="4" />
-            <circle class="logo-dot" cx="195" cy="90" r="3" opacity="0.5" />
-            <circle class="logo-dot" cx="85" cy="90" r="3" opacity="0.5" />
-          </svg>
-          <!-- Floating decorative tags (outside the logo, positioned in .hero-visual) -->
+          <span class="logo-emoji">🍍</span>
         </div>
         <div class="hero-floating-tags">
           <span class="float-tag"><span class="tag-emoji">🎬</span> UP 主</span>

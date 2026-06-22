@@ -201,38 +201,13 @@
     .hero-visual:hover .hero-logo { transform: scale(1.05); }
     .hero-visual { overflow: visible; }
 
-    /* ========== Redesigned Logo ========== */
+    /* ========== First Version Logo ========== */
     .hero-logo-svg { width: 100%; height: 100%; overflow: visible; }
-    /* Outer decorative ring */
-    .logo-ring-outer {
-      fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.15;
-      stroke-dasharray: 8 6;
-    }
-    /* Pineapple body */
-    .logo-pineapple-bg {
-      fill: url(#pineappleGrad); stroke: none;
-    }
-    .logo-pineapple-stroke {
-      fill: none; stroke: var(--accent-dark); stroke-width: 2.5;
-      stroke-linecap: round; stroke-linejoin: round;
-    }
-    .logo-pineapple-grid {
-      fill: none; stroke: rgba(232, 145, 74, 0.25); stroke-width: 1.5;
-      stroke-linecap: round; stroke-linejoin: round;
-    }
-    /* Pineapple crown (leaves) */
-    .logo-crown { fill: url(#crownGrad); stroke: none; }
-    .logo-crown-stroke { fill: none; stroke: var(--accent-dark); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    /* Zero ring */
-    .logo-zero-ring {
-      fill: none; stroke: var(--accent); stroke-width: 2.5; opacity: 0.5;
-    }
-    .logo-zero-text {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 18px; fill: var(--accent); opacity: 0.7;
-    }
-    /* Small accent dots */
-    .logo-accent-dot { fill: var(--accent); opacity: 0.4; }
+    .logo-ring { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0.2; }
+    .logo-ring-2 { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.1; }
+    .logo-pineapple { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .logo-zero { fill: none; stroke: var(--text-primary); stroke-width: 2; }
+    .logo-dot { fill: var(--accent); }
     .hero-glow {
       position: absolute; width: 350px; height: 350px; border-radius: 50%;
       background: radial-gradient(circle, rgba(232, 145, 74, 0.15), transparent 70%);
@@ -467,118 +442,34 @@
         <div class="hero-glow" id="heroGlow"></div>
         <div class="hero-logo reveal-scale stagger-2" id="heroLogo">
           <svg class="hero-logo-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="pineappleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#f5a623" />
-                <stop offset="40%" stop-color="#e8914a" />
-                <stop offset="100%" stop-color="#d97a3a" />
-              </linearGradient>
-              <linearGradient id="pineGradLight" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#fbc75d" />
-                <stop offset="100%" stop-color="#ed9d4f" />
-              </linearGradient>
-              <linearGradient id="crownGrad" x1="0%" y1="100%" x2="50%" y2="0%">
-                <stop offset="0%" stop-color="#5da85d" />
-                <stop offset="100%" stop-color="#8fcf8b" />
-              </linearGradient>
-            </defs>
-
-            <!-- Decorative outer ring -->
-            <circle class="logo-ring-outer" cx="140" cy="140" r="118" />
-
-            <!-- Crown / leaves — fuller, more natural -->
-            <g>
-              <!-- Back leaves -->
-              <path class="logo-crown" d="M140 65 Q125 35 105 22 Q120 38 140 60Z" opacity="0.7" />
-              <path class="logo-crown" d="M140 65 Q155 35 175 22 Q160 38 140 60Z" opacity="0.7" />
-              <!-- Center main leaf -->
-              <path class="logo-crown" d="M140 65 Q128 28 140 12 Q152 28 140 65Z" />
-              <path class="logo-crown" d="M140 65 Q115 40 95 30 Q120 48 140 60Z" opacity="0.85" />
-              <path class="logo-crown" d="M140 65 Q165 40 185 30 Q160 48 140 60Z" opacity="0.85" />
-              <!-- Leaf strokes -->
-              <path class="logo-crown-stroke" d="M140 65 Q128 28 140 12" />
-              <path class="logo-crown-stroke" d="M140 65 Q152 28 140 12" stroke-width="1.5" />
-              <path class="logo-crown-stroke" d="M140 65 Q115 40 95 30" />
-              <path class="logo-crown-stroke" d="M140 65 Q165 40 185 30" />
-              <path class="logo-crown-stroke" d="M140 65 Q125 35 105 22" stroke-width="1.5" />
-              <path class="logo-crown-stroke" d="M140 65 Q155 35 175 22" stroke-width="1.5" />
+            <!-- Outer ring -->
+            <circle class="logo-ring" cx="140" cy="140" r="120" />
+            <circle class="logo-ring-2" cx="140" cy="140" r="105" />
+            
+            <!-- Pineapple shape (simplified geometric) -->
+            <g class="logo-pineapple">
+              <path d="M140 60 L170 75 L170 105 L140 120 L110 105 L110 75 Z" />
+              <path d="M170 75 L195 90 L195 120 L170 105" />
+              <path d="M110 75 L85 90 L85 120 L110 105" />
+              <path d="M140 120 L170 135 L170 165 L140 180 L110 165 L110 135 Z" />
+              <path d="M170 135 L195 150 L195 180 L170 165" />
+              <path d="M110 135 L85 150 L85 180 L110 165" />
+              <path d="M140 180 L165 195 L165 210 L140 220 L115 210 L115 195 Z" />
+              <!-- Pineapple leaves -->
+              <path d="M140 60 Q140 35 145 20" stroke-width="2.5" />
+              <path d="M140 60 Q130 40 120 25" stroke-width="2" />
+              <path d="M140 60 Q150 40 160 25" stroke-width="2" />
+              <path d="M140 60 Q120 45 105 38" stroke-width="1.5" />
+              <path d="M140 60 Q160 45 175 38" stroke-width="1.5" />
             </g>
-
-            <!-- Pineapple body — rounded, NOT carrot-shaped -->
-            <!-- Wider oval, flatish bottom -->
-            <path class="logo-pineapple-bg" d="M140 55 C182 55 196 80 196 110 C196 145 192 168 180 190 C170 208 155 213 140 213 C125 213 110 208 100 190 C88 168 84 145 84 110 C84 80 98 55 140 55Z" />
-            <path class="logo-pineapple-stroke" d="M140 55 C182 55 196 80 196 110 C196 145 192 168 180 190 C170 208 155 213 140 213 C125 213 110 208 100 190 C88 168 84 145 84 110 C84 80 98 55 140 55Z" />
-
-            <!-- Body highlight -->
-            <path class="logo-pineapple-bg" d="M125 65 C155 65 175 85 178 115 C170 100 150 90 125 90 C108 90 98 100 95 115 C95 90 105 65 125 65Z" fill="rgba(255,255,255,0.15)" stroke="none" opacity="0.5" />
-
-            <!-- Diamond pattern — more rows, clearly diamond -->
-            <!-- Row 1 (top) -->
-            <path class="logo-pineapple-grid" d="M140 72 L152 80 L140 88 L128 80Z" />
-            <path class="logo-pineapple-grid" d="M152 72 L162 80 L152 88 L142 80Z" />
-            <path class="logo-pineapple-grid" d="M128 72 L118 80 L128 88 L138 80Z" />
-
-            <!-- Row 2 -->
-            <path class="logo-pineapple-grid" d="M140 92 L156 102 L140 112 L124 102Z" />
-            <path class="logo-pineapple-grid" d="M156 92 L172 102 L156 112 L140 102Z" />
-            <path class="logo-pineapple-grid" d="M124 92 L108 102 L124 112 L140 102Z" />
-
-            <!-- Row 3 -->
-            <path class="logo-pineapple-grid" d="M140 116 L158 128 L140 140 L122 128Z" />
-            <path class="logo-pineapple-grid" d="M158 116 L176 128 L158 140 L140 128Z" />
-            <path class="logo-pineapple-grid" d="M122 116 L104 128 L122 140 L140 128Z" />
-
-            <!-- Row 4 -->
-            <path class="logo-pineapple-grid" d="M140 144 L156 155 L140 166 L124 155Z" />
-            <path class="logo-pineapple-grid" d="M156 144 L172 155 L156 166 L140 155Z" />
-            <path class="logo-pineapple-grid" d="M124 144 L108 155 L124 166 L140 155Z" />
-
-            <!-- Row 5 -->
-            <path class="logo-pineapple-grid" d="M140 170 L153 180 L140 190 L127 180Z" />
-            <path class="logo-pineapple-grid" d="M153 170 L166 180 L153 190 L140 180Z" />
-            <path class="logo-pineapple-grid" d="M127 170 L114 180 L127 190 L140 180Z" />
-
-            <!-- Interest icons inside diamonds: 🎬 📸 🎧 -->
-            <!-- Music note (row 2, center diamond) -->
-            <g fill="none" stroke="rgba(232,145,74,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M140 99 L140 108" />
-              <circle cx="136" cy="108" r="3" fill="rgba(232,145,74,0.5)" stroke="none" />
-              <line x1="140" y1="99" x2="148" y2="97" />
-              <line x1="148" y1="97" x2="148" y2="106" />
-              <circle cx="144" cy="106" r="3" fill="rgba(232,145,74,0.5)" stroke="none" />
-            </g>
-
-            <!-- Play button / video (row 3, right diamond) -->
-            <g fill="none" stroke="rgba(232,145,74,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="155,124 165,128 155,132" fill="rgba(232,145,74,0.5)" stroke="none" />
-            </g>
-
-            <!-- Camera / photo (row 3, left diamond) -->
-            <g fill="none" stroke="rgba(232,145,74,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="117" y="124" width="10" height="8" rx="1.5" fill="rgba(232,145,74,0.25)" stroke="rgba(232,145,74,0.5)" />
-              <circle cx="122" cy="128" r="2.5" fill="none" />
-              <line x1="119" y1="125" x2="120" y2="127" stroke-width="1.5" />
-            </g>
-
-            <!-- Writing / pen (row 4, center diamond) -->
-            <g fill="none" stroke="rgba(232,145,74,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="136" y1="152" x2="144" y2="147" />
-              <line x1="136" y1="152" x2="134" y2="157" />
-              <line x1="144" y1="147" x2="146" y2="152" />
-              <path d="M137 150 Q140 153 143 151" stroke-width="1.2" />
-            </g>
-
-            <!-- Small decorative accent dots on pineapple body -->
-            <circle class="logo-accent-dot" cx="140" cy="188" r="2.5" />
-
-            <!-- "zero" ring — repositioned under the flat bottom -->
-            <circle class="logo-zero-ring" cx="140" cy="198" r="38" stroke-dasharray="3 5" />
-            <text class="logo-zero-text" x="140" y="203" text-anchor="middle">✧ 0 ✧</text>
-
-            <!-- Accent dots around the ring -->
-            <circle class="logo-accent-dot" cx="140" cy="236" r="2" />
-            <circle class="logo-accent-dot" cx="120" cy="228" r="1.5" />
-            <circle class="logo-accent-dot" cx="160" cy="228" r="1.5" />
+            
+            <!-- Zero symbol -->
+            <circle class="logo-zero" cx="140" cy="185" r="30" stroke-dasharray="4 4" />
+            
+            <!-- Decorative dots -->
+            <circle class="logo-dot" cx="140" cy="185" r="4" />
+            <circle class="logo-dot" cx="195" cy="90" r="3" opacity="0.5" />
+            <circle class="logo-dot" cx="85" cy="90" r="3" opacity="0.5" />
           </svg>
           <!-- Floating decorative tags (outside the logo, positioned in .hero-visual) -->
         </div>

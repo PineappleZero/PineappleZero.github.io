@@ -99,33 +99,45 @@
       66% { transform: translate(-20px, 20px); }
     }
 
-    /* ========== Hero Floating Tags ========== */
-    .hero-floating {
+    /* ========== Hero Floating Tags (redesigned) ========== */
+    .hero-floating-tags {
       position: absolute;
+      width: 100%; height: 100%;
+      top: 0; left: 0;
       pointer-events: none;
-      z-index: 1;
+      z-index: 2;
     }
     .float-tag {
       position: absolute;
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 100px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 500;
-      background: var(--surface);
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-sm);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(44,36,32,0.06);
       color: var(--text-secondary);
-      animation: float-around 6s ease-in-out infinite;
+      animation: tag-float 5s ease-in-out infinite;
       white-space: nowrap;
     }
-    .float-tag:nth-child(1) { top: 10%; left: -20px; animation-delay: 0s; }
-    .float-tag:nth-child(2) { bottom: 15%; right: -30px; animation-delay: 1.5s; }
-    .float-tag:nth-child(3) { top: 45%; left: -40px; animation-delay: 3s; }
-    .float-tag.tag-accent { background: var(--accent-light); color: var(--accent-dark); border-color: var(--accent); }
-    @keyframes float-around {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      25% { transform: translateY(-8px) rotate(1deg); }
-      75% { transform: translateY(4px) rotate(-1deg); }
+    .float-tag:nth-child(1) {
+      top: 6%; right: -8%;
+      animation-delay: 0s;
+    }
+    .float-tag:nth-child(2) {
+      top: 38%; left: -10%;
+      animation-delay: 1.2s;
+    }
+    .float-tag:nth-child(3) {
+      bottom: 8%; right: 2%;
+      animation-delay: 2.5s;
+    }
+    .float-tag .tag-emoji { margin-right: 4px; }
+    @keyframes tag-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     /* ========== Hero Section ========== */
@@ -179,20 +191,48 @@
     /* ========== Hero Visual ========== */
     .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; }
     .hero-easter-egg-hint {
-      position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
       font-size: 0.75rem; color: var(--text-muted);
       opacity: 0; transition: opacity 0.5s ease;
       white-space: nowrap;
     }
     .hero-visual:hover .hero-easter-egg-hint { opacity: 1; }
     .hero-logo { width: 280px; height: 280px; position: relative; transition: transform 0.3s ease; }
-    .hero-visual:hover .hero-logo { transform: scale(1.03); }
-    .hero-logo-svg { width: 100%; height: 100%; }
-    .logo-ring { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0.2; }
-    .logo-ring-2 { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.1; }
-    .logo-pineapple { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-    .logo-zero { fill: none; stroke: var(--text-primary); stroke-width: 2; }
-    .logo-dot { fill: var(--accent); }
+    .hero-visual:hover .hero-logo { transform: scale(1.05); }
+    .hero-visual { overflow: visible; }
+
+    /* ========== Redesigned Logo ========== */
+    .hero-logo-svg { width: 100%; height: 100%; overflow: visible; }
+    /* Outer decorative ring */
+    .logo-ring-outer {
+      fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: 0.15;
+      stroke-dasharray: 8 6;
+    }
+    /* Pineapple body */
+    .logo-pineapple-bg {
+      fill: url(#pineappleGrad); stroke: none;
+    }
+    .logo-pineapple-stroke {
+      fill: none; stroke: var(--accent-dark); stroke-width: 2.5;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .logo-pineapple-grid {
+      fill: none; stroke: rgba(232, 145, 74, 0.25); stroke-width: 1.5;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    /* Pineapple crown (leaves) */
+    .logo-crown { fill: url(#crownGrad); stroke: none; }
+    .logo-crown-stroke { fill: none; stroke: var(--accent-dark); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    /* Zero ring */
+    .logo-zero-ring {
+      fill: none; stroke: var(--accent); stroke-width: 2.5; opacity: 0.5;
+    }
+    .logo-zero-text {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 18px; fill: var(--accent); opacity: 0.7;
+    }
+    /* Small accent dots */
+    .logo-accent-dot { fill: var(--accent); opacity: 0.4; }
     .hero-glow {
       position: absolute; width: 350px; height: 350px; border-radius: 50%;
       background: radial-gradient(circle, rgba(232, 145, 74, 0.15), transparent 70%);
@@ -427,33 +467,61 @@
         <div class="hero-glow" id="heroGlow"></div>
         <div class="hero-logo reveal-scale stagger-2" id="heroLogo">
           <svg class="hero-logo-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-            <circle class="logo-ring" cx="140" cy="140" r="120" />
-            <circle class="logo-ring-2" cx="140" cy="140" r="105" />
-            <g class="logo-pineapple">
-              <path d="M140 60 L170 75 L170 105 L140 120 L110 105 L110 75 Z" />
-              <path d="M170 75 L195 90 L195 120 L170 105" />
-              <path d="M110 75 L85 90 L85 120 L110 105" />
-              <path d="M140 120 L170 135 L170 165 L140 180 L110 165 L110 135 Z" />
-              <path d="M170 135 L195 150 L195 180 L170 165" />
-              <path d="M110 135 L85 150 L85 180 L110 165" />
-              <path d="M140 180 L165 195 L165 210 L140 220 L115 210 L115 195 Z" />
-              <path d="M140 60 Q140 35 145 20" stroke-width="2.5" />
-              <path d="M140 60 Q130 40 120 25" stroke-width="2" />
-              <path d="M140 60 Q150 40 160 25" stroke-width="2" />
-              <path d="M140 60 Q120 45 105 38" stroke-width="1.5" />
-              <path d="M140 60 Q160 45 175 38" stroke-width="1.5" />
-            </g>
-            <circle class="logo-zero" cx="140" cy="185" r="30" stroke-dasharray="4 4" />
-            <circle class="logo-dot" cx="140" cy="185" r="4" />
-            <circle class="logo-dot" cx="195" cy="90" r="3" opacity="0.5" />
-            <circle class="logo-dot" cx="85" cy="90" r="3" opacity="0.5" />
+            <defs>
+              <linearGradient id="pineappleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f5a623" />
+                <stop offset="50%" stop-color="#e8914a" />
+                <stop offset="100%" stop-color="#d97a3a" />
+              </linearGradient>
+              <linearGradient id="crownGrad" x1="0%" y1="100%" x2="50%" y2="0%">
+                <stop offset="0%" stop-color="#6db56d" />
+                <stop offset="100%" stop-color="#8fcf8b" />
+              </linearGradient>
+            </defs>
+
+            <!-- Decorative outer ring -->
+            <circle class="logo-ring-outer" cx="140" cy="140" r="118" />
+
+            <!-- Crown / leaves -->
+            <path class="logo-crown" d="M140 58 Q133 38 125 20 Q135 28 140 22 Q145 28 155 20 Q147 38 140 58Z" />
+            <path class="logo-crown" d="M140 58 Q128 42 115 30 Q132 40 140 50 Q148 40 165 30 Q152 42 140 58Z" opacity="0.8" />
+            <path class="logo-crown" d="M140 58 Q120 48 105 42 Q125 50 140 56 Q155 50 175 42 Q160 48 140 58Z" opacity="0.6" />
+            <path class="logo-crown-stroke" d="M140 58 Q133 38 125 20" />
+            <path class="logo-crown-stroke" d="M140 58 Q145 28 155 20" />
+            <path class="logo-crown-stroke" d="M140 58 Q128 42 115 30" />
+            <path class="logo-crown-stroke" d="M140 58 Q152 42 165 30" />
+
+            <!-- Pineapple body -->
+            <path class="logo-pineapple-bg" d="M140 62 C110 62 95 80 95 105 C95 130 100 148 105 165 C110 182 120 195 130 208 C133 212 136 218 140 225 C144 218 147 212 150 208 C160 195 170 182 175 165 C180 148 185 130 185 105 C185 80 170 62 140 62Z" />
+            <path class="logo-pineapple-stroke" d="M140 62 C110 62 95 80 95 105 C95 130 100 148 105 165 C110 182 120 195 130 208 C133 212 136 218 140 225 C144 218 147 212 150 208 C160 195 170 182 175 165 C180 148 185 130 185 105 C185 80 170 62 140 62Z" />
+
+            <!-- Pineapple diamond pattern -->
+            <path class="logo-pineapple-grid" d="M140 70 L155 80 L155 100 L140 110 L125 100 L125 80Z" />
+            <path class="logo-pineapple-grid" d="M155 80 L175 90 L175 110 L155 100" />
+            <path class="logo-pineapple-grid" d="M125 80 L105 90 L105 110 L125 100" />
+            <path class="logo-pineapple-grid" d="M140 110 L158 122 L158 145 L140 157 L122 145 L122 122Z" />
+            <path class="logo-pineapple-grid" d="M158 122 L178 134 L178 157 L158 145" />
+            <path class="logo-pineapple-grid" d="M122 122 L102 134 L102 157 L122 145" />
+            <path class="logo-pineapple-grid" d="M140 157 L155 168 L155 188 L140 198 L125 188 L125 168Z" />
+            <path class="logo-pineapple-grid" d="M155 168 L170 178 L170 195 L155 188" />
+            <path class="logo-pineapple-grid" d="M125 168 L110 178 L110 195 L125 188" />
+
+            <!-- "zero" ring around bottom -->
+            <circle class="logo-zero-ring" cx="140" cy="194" r="42" stroke-dasharray="3 4" />
+            <text class="logo-zero-text" x="140" y="199" text-anchor="middle">✦ 0 ✦</text>
+
+            <!-- Accent dots -->
+            <circle class="logo-accent-dot" cx="120" cy="85" r="2.5" />
+            <circle class="logo-accent-dot" cx="160" cy="85" r="2.5" />
+            <circle class="logo-accent-dot" cx="105" cy="120" r="2" />
+            <circle class="logo-accent-dot" cx="175" cy="120" r="2" />
           </svg>
-          <!-- Floating decorative tags -->
-          <div class="hero-floating">
-            <span class="float-tag tag-accent">🎬 UP 主</span>
-            <span class="float-tag">📝 知乎答主</span>
-            <span class="float-tag">🎵 音乐迷</span>
-          </div>
+          <!-- Floating decorative tags (outside the logo, positioned in .hero-visual) -->
+        </div>
+        <div class="hero-floating-tags">
+          <span class="float-tag"><span class="tag-emoji">🎬</span> UP 主</span>
+          <span class="float-tag"><span class="tag-emoji">📝</span> 知乎答主</span>
+          <span class="float-tag"><span class="tag-emoji">🎵</span> 音乐迷</span>
         </div>
         <span class="hero-easter-egg-hint" data-i18n="easterHint">✨ 戳一下菠萝有惊喜</span>
       </div>
